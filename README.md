@@ -484,10 +484,11 @@ def main():
 Um jogo precisa de `assets` que são os arquivos estáticos como imagens e arquivos
 de áudio que serão carregados durante o jogo, vamos colocar os assets no 
 diretório `src/catch_a_beer/assets/` e para facilitar você pode executar o
-seguinte script que vai baixar os arquivos do github.
+seguinte script que vai baixar os arquivos do github, ou se preferir pode
+copiar diretamente do repositório em https://github.com/rochacbruno/catch_a_beer
 
 ```bash
-# TODO  
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/rochacbruno/catch_a_beer/main/get_assets.sh)"
 ```
 
 ![](images/assets.gif)
@@ -964,6 +965,8 @@ def main():
             Game.losses += 1
             beer, beer_position = load_random_beer()
 ```
+
+![](images/catch_beer.mp4)
 
 <video width="800" height="600" controls>
   <source src="images/catch_beer.mp4" type="video/mp4">
