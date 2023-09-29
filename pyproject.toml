@@ -1,0 +1,12 @@
+[project]
+name = "catch_a_beer"
+requires-python = ">=3.10"
+version = "0.1.0"
+dependencies = ["pygame"]
+
+[project.scripts]
+catch-a-beer="catch_a_beer.game:main"
+
+[build-system]
+requires = ["setuptools>=45"]
+build-backend = 'setuptools.build_meta'
