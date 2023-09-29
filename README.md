@@ -968,6 +968,10 @@ def main():
 
 ![](images/catch_beer.mp4)
 
+
+https://github.com/rochacbruno/catch_a_beer/assets/458654/766bed9b-6c40-4acd-bb87-478b5a838291
+
+
 <video width="800" height="600" controls>
   <source src="images/catch_beer.mp4" type="video/mp4">
 </video>
