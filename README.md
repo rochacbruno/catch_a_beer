@@ -558,7 +558,7 @@ from pathlib import Path
 
 DIR = Path(__file__).parent.absolute()
 ASSETS = DIR / "assets/game/"
-SOUNDS = ASSETS / "sounds"
+SOUNDS = ASSETS / "sound"
 PLAYER = ASSETS / "player"
 BEERS = ASSETS / "beers"
 
