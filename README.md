@@ -650,11 +650,36 @@ def main():
 
 ![](images/beers_down.gif)
 
-
 ### Player One
 
 Nosso jogo tem um jogador apenas, vamos posiciona-lo na tela e capturar os movimentos
 das setas do teclado para move-lo
+
+Após `beer, beer_position = ...`
+```python
+player = pg.image.load(PLAYER / "player.png")
+player = pg.transform.scale(player, (150, 150))
+player_position = player.get_rect()
+player_position.center = Position.BOTTOM_RIGHT
+```
+
+dentro do event loop logo após o `case keys.K_ESCAPE`
+
+```python
+case keys.K_LEFT:
+    player_position.center = Position.BOTTOM_LEFT
+case keys.K_RIGHT:
+   player_position.center = Position.BOTTOM_RIGHT
+```
+
+E logo após o posicionamento da cerveja.
+
+```python
+# Position player
+window.blit(player, player_position)
+```
+
+O diff completo:
 
 ```diff
 def main():
@@ -687,7 +712,6 @@ def main():
 Neste ponto do jogo já estamos posicionando o jogador em seu ponto inicial e
 reagindo aos eventos das setas do teclado para mudar a posição do jogador.
 
-
 ![](images/arrows.gif)
 
 ## Colisão
@@ -705,6 +729,23 @@ como temos a informação da posição da cerveja e do jogador, o que precisamos
 é usar a matemática para verificar se estão as 2 posições se colidem.
 
 Vamos aproveitar para executar um áudio quando o player pegar uma cerveja!
+
+Faremos isso dentro do loop de eventos logo no começo
+
+```python
+       # Colision detection
+if (
+    10 < (player_position[1] - beer_position[1]) < 30
+    and player_position[0] == beer_position[0] - 25
+):
+    Game.gains += 1
+    beer, beer_position = load_random_beer()
+    sound = random.choice(["sensacional.mp3", "olha_so.mp3"])
+    pg.mixer.music.load(SOUNDS / sound)
+    pg.mixer.music.play(0)
+```
+
+E o diff completo:
 
 ```diff
 def main():
@@ -729,6 +770,35 @@ def main():
 Vamos colocar uma tela de boas vindas e uma tela de game over, a de boas vindas
 vai ficar parada esperando uma tecla ser pressionada antes de iniciar a partida e
 a de game over vai aparecer assim que o jogador perder 3 cervejas.
+
+Vamos fazer isso usando o gerenciador de estado e eventos de teclado.
+
+```python
+
+# Wait keypress to start the game
+while Game.paused:
+    msg = normal_font.render("Press any key to start", 1, Color.YELLOW, Color.BLACK)
+    window.blit(msg, (Size.WIDTH / 4, 100))
+    pg.display.update()
+    if pg.event.get(keys.KEYDOWN):
+        pg.mixer.music.load(SOUNDS / "vai.mp3")
+        pg.mixer.music.play(0)
+        Game.paused = False
+# Game over screen
+if Game.losses > 3:
+    msg = big_font.render("GAME OVER", 1, Color.YELLOW, Color.BLACK)
+    window.blit(msg, (Size.WIDTH / 4, 100))
+    pg.display.update()
+    pg.mixer.music.load(SOUNDS / "zika.mp3")
+    pg.mixer.music.play(0)
+    wait_key = True
+    while wait_key:
+        if pg.event.get(keys.KEYDOWN):
+            wait_key = Game.running = False
+            continue
+```
+
+E o diff completo
 
 ```diff
 def main():
