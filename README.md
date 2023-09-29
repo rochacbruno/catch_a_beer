@@ -733,7 +733,7 @@ Vamos aproveitar para executar um áudio quando o player pegar uma cerveja!
 Faremos isso dentro do loop de eventos logo no começo
 
 ```python
-       # Colision detection
+# Colision detection
 if (
     10 < (player_position[1] - beer_position[1]) < 30
     and player_position[0] == beer_position[0] - 25
